@@ -3,11 +3,11 @@ module Alchemy
     class Engine < ::Rails::Engine
       engine_name 'alchemy_solidus'
 
-      def self.activate
-        Alchemy.register_ability(::Spree::Ability)
+      config.to_prepare do
+        Alchemy.register_ability ::Spree::Ability
+        require 'alchemy/solidus/spree_user_decorator' if Alchemy.user_class_name == 'Spree::User'
+        require 'alchemy/solidus/alchemy_user_decorator' if Alchemy.user_class_name == 'Alchemy::User'
       end
-
-      config.to_prepare &method(:activate).to_proc
     end
   end
 end
