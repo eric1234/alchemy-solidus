@@ -1,5 +1,4 @@
-Spree::User.class_eval do
-
+module SpreeUserExtension
   def alchemy_roles
     if has_spree_role?(:admin)
       %w(admin)

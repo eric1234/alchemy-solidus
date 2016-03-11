@@ -1,3 +1,6 @@
+require 'alchemy/solidus/spree_user_extension'
+require 'alchemy/solidus/alchemy_user_extension'
+
 module Alchemy
   module Solidus
     class Engine < ::Rails::Engine
@@ -5,8 +8,8 @@ module Alchemy
 
       config.to_prepare do
         Alchemy.register_ability ::Spree::Ability
-        require 'alchemy/solidus/spree_user_decorator' if Alchemy.user_class_name == 'Spree::User'
-        require 'alchemy/solidus/alchemy_user_decorator' if Alchemy.user_class_name == 'Alchemy::User'
+        Spree::User.include SpreeUserExtension if Alchemy.user_class_name == 'Spree::User'
+        Alchemy::User.include AlchemyUserExtension if Alchemy.user_class_name == 'Alchemy::User'
       end
     end
   end
